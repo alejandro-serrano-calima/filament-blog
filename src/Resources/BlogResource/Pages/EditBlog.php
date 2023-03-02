@@ -2,9 +2,9 @@
 
 namespace Stephenjude\FilamentBlog\Resources\BlogResource\Pages;
 
-use App\Filament\Resources\BlogResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Stephenjude\FilamentBlog\Resources\BlogResource;
 
 class EditBlog extends EditRecord
 {

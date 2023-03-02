@@ -2,9 +2,9 @@
 
 namespace Stephenjude\FilamentBlog\Resources\BlogResource\Pages;
 
-use App\Filament\Resources\BlogResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Stephenjude\FilamentBlog\Resources\BlogResource;
 
 class ListBlogs extends ListRecords
 {

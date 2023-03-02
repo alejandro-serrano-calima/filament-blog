@@ -5,12 +5,12 @@ namespace Stephenjude\FilamentBlog\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Tags\HasTags;
 
 class Blog extends Model
 {
-    use HasFactory;
-    use HasTags;
+    use HasFactory, HasTags, SoftDeletes;
 
     /**
      * @var string

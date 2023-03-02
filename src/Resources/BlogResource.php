@@ -33,7 +33,7 @@ class BlogResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
-                            ->label(__('filament-blog::filament-blog.blog-name'))
+                            ->label(__('filament-blog::filament-blog.blog_name'))
                             ->required()
                             ->reactive()
                             ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),

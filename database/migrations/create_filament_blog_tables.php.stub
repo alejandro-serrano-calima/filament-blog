@@ -18,7 +18,7 @@ return new class () extends Migration {
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
             $table->timestamps();
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes();
         });
 
         Schema::create('blog_categories', function (Blueprint $table) {
@@ -31,7 +31,7 @@ return new class () extends Migration {
             $table->string('seo_title', 60)->nullable();
             $table->string('seo_description', 160)->nullable();
             $table->timestamps();
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes();
         });
 
         Schema::create('blog_blog_category', function (Blueprint $table) {
@@ -50,7 +50,7 @@ return new class () extends Migration {
             $table->string('github_handle')->nullable();
             $table->string('twitter_handle')->nullable();
             $table->timestamps();
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes();
         });
 
         Schema::create('blog_blog_author', function (Blueprint $table) {
@@ -71,7 +71,7 @@ return new class () extends Migration {
             $table->longText('content');
             $table->date('published_at')->nullable();
             $table->timestamps();
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes();
         });
 
         Schema::create('blog_comments', function (Blueprint $table) {
@@ -83,7 +83,7 @@ return new class () extends Migration {
             $table->longText('content');
             $table->date('published_at')->nullable();
             $table->timestamps();
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes();
         });
 
         Schema::table('blog_comments', function (Blueprint $table) {

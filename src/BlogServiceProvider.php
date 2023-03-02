@@ -6,12 +6,14 @@ use Filament\PluginServiceProvider;
 use Spatie\LaravelPackageTools\Package;
 use Stephenjude\FilamentBlog\Commands\InstallCommand;
 use Stephenjude\FilamentBlog\Resources\AuthorResource;
+use Stephenjude\FilamentBlog\Resources\BlogResource;
 use Stephenjude\FilamentBlog\Resources\CategoryResource;
 use Stephenjude\FilamentBlog\Resources\PostResource;
 
 class BlogServiceProvider extends PluginServiceProvider
 {
     protected array $resources = [
+        BlogResource::class,
         AuthorResource::class,
         CategoryResource::class,
         PostResource::class,
