@@ -26,6 +26,11 @@ class Blog extends Model
         'description',
     ];
 
+    public function authors(): HasMany
+    {
+        return $this->HasMany(Author::class);
+    }
+
     public function categories(): HasMany
     {
         return $this->HasMany(Category::class);

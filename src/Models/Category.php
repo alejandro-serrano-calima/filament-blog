@@ -5,6 +5,8 @@ namespace Stephenjude\FilamentBlog\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
@@ -33,9 +35,14 @@ class Category extends Model
         'is_visible' => 'boolean',
     ];
 
-    public function posts(): HasMany
+    public function blogs(): BelongsToMany
     {
-        return $this->hasMany(Post::class, 'blog_category_id', 'id');
+        return $this->belongsToMany(Blog::class);
+    }
+
+    public function posts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class);
     }
 
     public function scopeIsVisible(Builder $query)
