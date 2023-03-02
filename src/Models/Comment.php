@@ -18,7 +18,7 @@ class Comment extends Model
     /**
      * @var string
      */
-    protected $table = 'blog_comments';
+    protected $table = 'comments';
 
     /**
      * @var array<int, string>
@@ -36,7 +36,7 @@ class Comment extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(Author::class, 'blog_author_id');
+        return $this->belongsTo(Author::class, 'author_id');
     }
 
     public function user(): BelongsTo
@@ -46,7 +46,7 @@ class Comment extends Model
 
     public function post(): BelongsTo
     {
-        return $this->belongsTo(Post::class, 'blog_post_id');
+        return $this->belongsTo(Post::class, 'post_id');
     }
 
     public function parent(): BelongsTo

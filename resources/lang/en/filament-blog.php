@@ -27,5 +27,10 @@ return [
     'github' => 'Github',
     'twitter' => 'Twitter',
     'tags' => 'Tags',
+    'blog' => 'Blog',
+    'blogs' => 'Blogs',
     'blog_name' => 'Blog Name',
+    'description' => 'Description',
+    'comment' => 'Comment',
+    'comments'=> 'Comments',
 ];

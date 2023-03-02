@@ -26,7 +26,7 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -39,12 +39,22 @@ class CategoryResource extends Resource
                             ->required()
                             ->reactive()
                             ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+
                         Forms\Components\TextInput::make('slug')
                             ->label(__('filament-blog::filament-blog.slug'))
                             ->disabled()
                             ->required()
                             ->unique(Category::class, 'slug', fn ($record) => $record),
+
+                        Forms\Components\Select::make('blog_id')
+                            ->multiple()
+                            ->label(__('filament-blog::filament-blog.blogs'))
+                            ->relationship('blogs', 'name')
+                            ->required()
+                            ->columnSpan(2),
+
                         self::getContentEditor('description'),
+
                         Forms\Components\Toggle::make('is_visible')
                             ->label(__('filament-blog::filament-blog.visible_to_guests'))
                             ->default(true),

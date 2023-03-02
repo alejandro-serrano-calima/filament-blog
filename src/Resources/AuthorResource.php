@@ -25,7 +25,7 @@ class AuthorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -41,15 +41,17 @@ class AuthorResource extends Resource
                             ->required()
                             ->email()
                             ->unique(Author::class, 'email', fn ($record) => $record),
+                        Forms\Components\Select::make('blog_id')
+                            ->multiple()
+                            ->label(__('filament-blog::filament-blog.blogs'))
+                            ->relationship('blogs', 'name')
+                            ->required(),
                         Forms\Components\FileUpload::make('photo')
                             ->label(__('filament-blog::filament-blog.photo'))
                             ->image()
                             ->maxSize(5120)
                             ->directory('blog')
-                            ->disk('public')
-                            ->columnSpan([
-                                'sm' => 2,
-                            ]),
+                            ->disk('public'),
                         self::getContentEditor('bio'),
                         Forms\Components\TextInput::make('github_handle')
                             ->label(__('filament-blog::filament-blog.github')),

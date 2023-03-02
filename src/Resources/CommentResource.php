@@ -14,26 +14,26 @@ use Illuminate\Support\Str;
 
 use function now;
 
-use Stephenjude\FilamentBlog\Models\Post;
-use Stephenjude\FilamentBlog\Resources\PostResource\Pages;
+use Stephenjude\FilamentBlog\Models\Comment;
+use Stephenjude\FilamentBlog\Resources\CommentResource\Pages;
 
 use Stephenjude\FilamentBlog\Traits\HasContentEditor;
 
-class PostResource extends Resource
+class CommentResource extends Resource
 {
     use HasContentEditor;
 
-    protected static ?string $model = Post::class;
+    protected static ?string $model = Comment::class;
 
-    protected static ?string $slug = 'blogs/posts';
+    protected static ?string $slug = 'blogs/comments';
 
     protected static ?string $recordTitleAttribute = 'title';
 
     protected static ?string $navigationGroup = 'Blogs';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-chat';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -179,9 +179,9 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
+            'index' => Pages\ListComments::route('/'),
+            'create' => Pages\CreateComment::route('/create'),
+            'edit' => Pages\EditComment::route('/{record}/edit'),
         ];
     }
 
@@ -212,11 +212,11 @@ class PostResource extends Resource
 
     public static function getPluralModelLabel(): string
     {
-        return __('filament-blog::filament-blog.posts');
+        return __('filament-blog::filament-blog.comments');
     }
 
     public static function getModelLabel(): string
     {
-        return __('filament-blog::filament-blog.post');
+        return __('filament-blog::filament-blog.comment');
     }
 }

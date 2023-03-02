@@ -17,7 +17,7 @@ class Category extends Model
     /**
      * @var string
      */
-    protected $table = 'blog_categories';
+    protected $table = 'categories';
 
     /**
      * @var array<int, string>

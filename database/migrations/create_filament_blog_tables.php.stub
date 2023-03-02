@@ -21,9 +21,8 @@ return new class () extends Migration {
             $table->softDeletes();
         });
 
-        Schema::create('blog_categories', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('blog_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
@@ -34,15 +33,14 @@ return new class () extends Migration {
             $table->softDeletes();
         });
 
-        Schema::create('blog_blog_category', function (Blueprint $table) {
+        Schema::create('blog_category', function (Blueprint $table) {
             $table->id();
             $table->foreignId('blog_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('blog_category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
         });
 
-        Schema::create('blog_authors', function (Blueprint $table) {
+        Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('blog_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('photo')->nullable();
@@ -53,17 +51,17 @@ return new class () extends Migration {
             $table->softDeletes();
         });
 
-        Schema::create('blog_blog_author', function (Blueprint $table) {
+        Schema::create('author_blog', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('author_id')->constrained()->cascadeOnDelete();
             $table->foreignId('blog_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('blog_author_id')->constrained()->cascadeOnDelete();
         });
 
-        Schema::create('blog_posts', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('blog_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('blog_author_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignId('blog_category_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('author_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('excerpt')->nullable();
@@ -74,11 +72,11 @@ return new class () extends Migration {
             $table->softDeletes();
         });
 
-        Schema::create('blog_comments', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreignId('blog_post_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('blog_author_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('post_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('author_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->longText('content');
             $table->date('published_at')->nullable();
@@ -86,8 +84,8 @@ return new class () extends Migration {
             $table->softDeletes();
         });
 
-        Schema::table('blog_comments', function (Blueprint $table) {
-            $table->foreign('parent_id')->references('id')->on('blog_comments');
+        Schema::table('comments', function (Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('comments');
         });
     }
 
@@ -98,12 +96,12 @@ return new class () extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('blog_comments');
-        Schema::dropIfExists('blog_posts');
-        Schema::dropIfExists('blog_blog_category');
-        Schema::dropIfExists('blog_categories');
-        Schema::dropIfExists('blog_blog_author');
-        Schema::dropIfExists('blog_authors');
+        Schema::dropIfExists('comments');
+        Schema::dropIfExists('posts');
+        Schema::dropIfExists('blog_category');
+        Schema::dropIfExists('categories');
+        Schema::dropIfExists('blog_author');
+        Schema::dropIfExists('authors');
         Schema::dropIfExists('blogs');
     }
 };

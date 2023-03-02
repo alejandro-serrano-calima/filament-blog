@@ -32,11 +32,26 @@ class BlogResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                            ->label(__('filament-blog::filament-blog.blog_name'))
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                Forms\Components\TextInput::make('name')
+                    ->label(__('filament-blog::filament-blog.blog_name'))
+                    ->required()
+                    ->reactive()
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+
+                Forms\Components\TextInput::make('slug')
+                    ->label(__('filament-blog::filament-blog.slug'))
+                    ->disabled()
+                    ->required()
+                    ->unique(Blog::class, 'slug', fn ($record) => $record),
+
+                Forms\Components\Textarea::make('description')
+                    ->label(__('filament-blog::filament-blog.description'))
+                    ->rows(4)
+                    ->minLength(5)
+                    ->maxLength(1000)
+                    ->columnSpan([
+                        'sm' => 2,
+                    ]),
             ]);
     }
 
