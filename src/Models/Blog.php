@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Tags\HasTags;
 
-class Post extends Model
+class Blog extends Model
 {
     use HasFactory;
     use HasTags;
