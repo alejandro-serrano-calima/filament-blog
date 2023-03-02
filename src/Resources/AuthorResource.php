@@ -17,15 +17,15 @@ class AuthorResource extends Resource
 
     protected static ?string $model = Author::class;
 
-    protected static ?string $slug = 'blog/authors';
+    protected static ?string $slug = 'blogs/authors';
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Blog';
+    protected static ?string $navigationGroup = 'Blogs';
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {

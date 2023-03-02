@@ -1,24 +1,18 @@
 {
-    "name": "alejandro-serrano-calima/filament-blog",
-    "description": "Filament MultiBlog Builder",
+    "name": "stephenjude/filament-blog",
+    "description": "Filament Blog Builder",
     "keywords": [
         "stephenjude",
         "laravel",
         "filament-blog",
-        "blog",
-        "multi-blog"
+        "blog"
     ],
-    "homepage": "https://github.com/alejandro-serrano-calima/filament-blog",
+    "homepage": "https://github.com/stephenjude/filament-blog",
     "license": "MIT",
     "authors": [
         {
             "name": "stephenjude",
             "email": "stephenjudesuccess@gmail.com",
-            "role": "Developer"
-        },
-        {
-            "name": "Alejandro Serrano",
-            "email": "serrano@calimasolutions.com",
             "role": "Developer"
         }
     ],
