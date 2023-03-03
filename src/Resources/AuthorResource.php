@@ -33,14 +33,21 @@ class AuthorResource extends Resource
             ->schema([
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->label(__('filament-blog::filament-blog.name'))
-                            ->required(),
                         Forms\Components\TextInput::make('email')
                             ->label(__('filament-blog::filament-blog.email'))
                             ->required()
                             ->email()
                             ->unique(Author::class, 'email', fn ($record) => $record),
+                        Forms\Components\TextInput::make('password')
+                            ->label(__('filament-blog::filament-blog.password'))
+                            ->password()
+                            ->required(),
+                        Forms\Components\TextInput::make('first_name')
+                            ->label(__('filament-blog::filament-blog.first_name'))
+                            ->required(),
+                        Forms\Components\TextInput::make('last_name')
+                            ->label(__('filament-blog::filament-blog.last_name'))
+                            ->required(),
                         Forms\Components\Select::make('blog_id')
                             ->multiple()
                             ->label(__('filament-blog::filament-blog.blogs'))
@@ -84,21 +91,18 @@ class AuthorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('photo')
-                    ->label(__('filament-blog::filament-blog.photo'))
-                    ->rounded(),
-                Tables\Columns\TextColumn::make('name')
-                    ->label(__('filament-blog::filament-blog.name'))
+                Tables\Columns\TextColumn::make('first_name')
+                    ->label(__('filament-blog::filament-blog.first_name'))
+                    ->searchable()
+                    ->sortable(),
+                    Tables\Columns\TextColumn::make('last_name')
+                    ->label(__('filament-blog::filament-blog.last_name'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('email')
                     ->label(__('filament-blog::filament-blog.email'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('github_handle')
-                    ->label(__('filament-blog::filament-blog.github')),
-                Tables\Columns\TextColumn::make('twitter_handle')
-                    ->label(__('filament-blog::filament-blog.twitter')),
             ])
             ->filters([
                 //
@@ -116,8 +120,6 @@ class AuthorResource extends Resource
     {
         return [
             'index' => Pages\ListAuthors::route('/'),
-            'create' => Pages\CreateAuthor::route('/create'),
-            'edit' => Pages\EditAuthor::route('/{record}/edit'),
         ];
     }
 

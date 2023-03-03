@@ -52,6 +52,12 @@ class BlogResource extends Resource
                     ->columnSpan([
                         'sm' => 2,
                     ]),
+
+                Forms\Components\Select::make('filament_user_id')
+                    ->multiple()
+                    ->label(__('filament-blog::filament-blog.authors'))
+                    ->relationship('authors', 'email')
+                    ->required(),
             ]);
     }
 

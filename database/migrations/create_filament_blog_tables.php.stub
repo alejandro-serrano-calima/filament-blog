@@ -12,6 +12,10 @@ return new class () extends Migration {
      */
     public function up()
     {
+        Schema::table('filament_users', function (Blueprint $table) {
+            $table->softDeletes();
+        });
+
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -39,28 +43,16 @@ return new class () extends Migration {
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
         });
 
-        Schema::create('authors', function (Blueprint $table) {
+        Schema::create('blog_filament_user', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('photo')->nullable();
-            $table->longText('bio')->nullable();
-            $table->string('github_handle')->nullable();
-            $table->string('twitter_handle')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('author_blog', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('author_id')->constrained()->cascadeOnDelete();
             $table->foreignId('blog_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('filament_user_id')->constrained()->cascadeOnDelete();
         });
 
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('blog_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('author_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('filament_user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
@@ -76,7 +68,7 @@ return new class () extends Migration {
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreignId('post_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('author_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('filament_user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->longText('content');
             $table->date('published_at')->nullable();
@@ -100,8 +92,7 @@ return new class () extends Migration {
         Schema::dropIfExists('posts');
         Schema::dropIfExists('blog_category');
         Schema::dropIfExists('categories');
-        Schema::dropIfExists('blog_author');
-        Schema::dropIfExists('authors');
+        Schema::dropIfExists('blog_filament_user');
         Schema::dropIfExists('blogs');
     }
 };

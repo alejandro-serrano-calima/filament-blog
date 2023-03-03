@@ -32,5 +32,8 @@ return [
     'blog_name' => 'Blog Name',
     'description' => 'Description',
     'comment' => 'Comment',
-    'comments'=> 'Comments',
+    'comments' => 'Comments',
+    'first_name' => 'First name',
+    'last_name' => 'Last name',
+    'password' => 'Password',
 ];

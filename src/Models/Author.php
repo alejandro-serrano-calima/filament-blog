@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Chiiya\FilamentAccessControl\Enumerators\RoleName;
 
 class Author extends Model
 {
@@ -17,30 +18,27 @@ class Author extends Model
     /**
      * @var string
      */
-    protected $table = 'authors';
+    protected $table = 'filament_users';
 
     /**
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
-        'photo',
-        'bio',
-        'github_handle',
-        'twitter_handle',
+        'password',
+        'first_name',
+        'last_name',
+        'expires_at',
+        'two_factor_code',
+        'two_factor_expires_at',
     ];
 
     /**
-     * @var array<string>
+     * Check whether the user is a super admin.
      */
-    protected $appends = [
-        'photo_url',
-    ];
-
-    public function photoUrl(): Attribute
+    public function isSuperAdmin(): bool
     {
-        return Attribute::get(fn () => asset(Storage::url($this->photo)));
+        return $this->hasRole(RoleName::SUPER_ADMIN);
     }
 
     public function blogs(): BelongsToMany
