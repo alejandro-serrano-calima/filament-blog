@@ -73,9 +73,9 @@ class Post extends Model
         return $this->belongsTo(Blog::class, 'blog_id');
     }
 
-    public function categories(): BelongsToMany
+    public function category(): HasOne
     {
-        return $this->belongsToMany(Category::class, 'category_id');
+        return $this->hasOne(Category::class, 'category_id');
     }
 
     public function comments(): HasMany
