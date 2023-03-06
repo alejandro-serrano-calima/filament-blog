@@ -24,7 +24,11 @@ class Comment extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'parent_id',
+        'post_id',
+        'filament_user_id',
         'content',
+        'published_at',
     ];
 
     /**
@@ -36,7 +40,7 @@ class Comment extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(Author::class, 'author_id');
+        return $this->belongsTo(Author::class, 'filament_user_id');
     }
 
     public function user(): BelongsTo

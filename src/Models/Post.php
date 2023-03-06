@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
@@ -26,6 +25,8 @@ class Post extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'blog_id',
+        'category_id',
         'title',
         'slug',
         'excerpt',
@@ -65,7 +66,7 @@ class Post extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(Author::class, 'author_id');
+        return $this->belongsTo(Author::class, 'filament_user_id');
     }
 
     public function blog(): BelongsTo
@@ -73,9 +74,9 @@ class Post extends Model
         return $this->belongsTo(Blog::class, 'blog_id');
     }
 
-    public function category(): HasOne
+    public function category(): BelongsTo
     {
-        return $this->hasOne(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function comments(): HasMany

@@ -41,6 +41,24 @@ class Author extends Model
         return $this->hasRole(RoleName::SUPER_ADMIN);
     }
 
+    /**
+     * Provides full name of the current author.
+     */
+    public function getFullNameAttribute(): string
+    {
+        if (! $this->first_name && ! $this->last_name) {
+            return '—';
+        }
+
+        $name = $this->first_name ?? '';
+
+        if ($this->last_name) {
+            $name .= ' '.$this->last_name;
+        }
+
+        return $name;
+    }
+
     public function blogs(): BelongsToMany
     {
         return $this->belongsToMany(Blog::class);
@@ -48,6 +66,6 @@ class Author extends Model
 
     public function posts(): HasMany
     {
-        return $this->hasMany(Post::class, 'author_id');
+        return $this->hasMany(Post::class, 'filament_user_id');
     }
 }

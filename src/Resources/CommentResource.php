@@ -41,62 +41,27 @@ class CommentResource extends Resource
             ->schema([
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\TextInput::make('title')
-                            ->label(__('filament-blog::filament-blog.title'))
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
-
-                        Forms\Components\TextInput::make('slug')
-                            ->label(__('filament-blog::filament-blog.slug'))
-                            ->disabled()
-                            ->required()
-                            ->unique(Post::class, 'slug', fn ($record) => $record),
-
-                        Forms\Components\Textarea::make('excerpt')
-                            ->label(__('filament-blog::filament-blog.excerpt'))
-                            ->rows(2)
-                            ->minLength(50)
-                            ->maxLength(1000)
-                            ->columnSpan([
-                                'sm' => 2,
-                            ]),
-
-                        Forms\Components\FileUpload::make('banner')
-                            ->label(__('filament-blog::filament-blog.banner'))
-                            ->image()
-                            ->maxSize(5120)
-                            ->imageCropAspectRatio('16:9')
-                            ->directory('blog')
-                            ->columnSpan([
-                                'sm' => 2,
-                            ]),
-
-                        self::getContentEditor('content'),
-
-                        Forms\Components\Select::make('blog_id')
-                            ->label(__('filament-blog::filament-blog.blog'))
-                            ->relationship('blog', 'name')
+                        Forms\Components\Select::make('post_id')
+                            ->label(__('filament-blog::filament-blog.post'))
+                            ->relationship('post', 'title')
                             ->required(),
+
+                        Forms\Components\Select::make('answer_to')
+                            ->label(__('filament-blog::filament-blog.answer_to'))
+                            ->relationship('parent', 'content')
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
 
                         Forms\Components\Select::make('author_id')
                             ->label(__('filament-blog::filament-blog.author'))
-                            ->relationship('author', 'name')
-                            ->searchable()
-                            ->required(),
-
-                        Forms\Components\Select::make('category_id')
-                            ->label(__('filament-blog::filament-blog.categories'))
-                            ->multiple()
-                            ->relationship('categories', 'name')
+                            ->relationship('author', 'email')
                             ->searchable()
                             ->required(),
 
                         Forms\Components\DatePicker::make('published_at')
                             ->label(__('filament-blog::filament-blog.published_date')),
 
-                        SpatieTagsInput::make('tags')
-                            ->label(__('filament-blog::filament-blog.tags'))
+                        Forms\Components\TextInput::make('content')
+                            ->label(__('filament-blog::filament-blog.comment_content'))
                             ->required()
                             ->columnSpan([
                                 'sm' => 2,
@@ -111,12 +76,12 @@ class CommentResource extends Resource
                         Forms\Components\Placeholder::make('created_at')
                             ->label(__('filament-blog::filament-blog.created_at'))
                             ->content(fn (
-                                ?Post $record
+                                ?Comment $record
                             ): string => $record ? $record->created_at->diffForHumans() : '-'),
                         Forms\Components\Placeholder::make('updated_at')
                             ->label(__('filament-blog::filament-blog.last_modified_at'))
                             ->content(fn (
-                                ?Post $record
+                                ?Comment $record
                             ): string => $record ? $record->updated_at->diffForHumans() : '-'),
                     ])
                     ->columnSpan(1),

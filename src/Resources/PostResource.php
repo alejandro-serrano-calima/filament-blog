@@ -56,7 +56,7 @@ class PostResource extends Resource
                         Forms\Components\Textarea::make('excerpt')
                             ->label(__('filament-blog::filament-blog.excerpt'))
                             ->rows(2)
-                            ->minLength(50)
+                            ->minLength(20)
                             ->maxLength(1000)
                             ->columnSpan([
                                 'sm' => 2,
@@ -81,14 +81,13 @@ class PostResource extends Resource
 
                         Forms\Components\Select::make('author_id')
                             ->label(__('filament-blog::filament-blog.author'))
-                            ->relationship('author', 'name')
+                            ->relationship('author', 'email')
                             ->searchable()
                             ->required(),
 
                         Forms\Components\Select::make('category_id')
-                            ->label(__('filament-blog::filament-blog.categories'))
-                            ->multiple()
-                            ->relationship('categories', 'name')
+                            ->label(__('filament-blog::filament-blog.category'))
+                            ->relationship('category', 'name')
                             ->searchable()
                             ->required(),
 
